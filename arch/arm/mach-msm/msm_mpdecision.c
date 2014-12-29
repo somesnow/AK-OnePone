@@ -555,6 +555,9 @@ static void msm_mpdec_suspend(struct work_struct * msm_mpdec_suspend_work) {
 	is_screen_on = false;
 #endif
 
+        if (!msm_mpdec_tuners_ins.enabled)
+                return;
+
 	if (!msm_mpdec_tuners_ins.scroff_single_core) {
 #ifdef CONFIG_MSM_MPDEC_INPUTBOOST_CPUMIN
 		for_each_possible_cpu(cpu)
@@ -587,6 +590,9 @@ static void msm_mpdec_resume(struct work_struct * msm_mpdec_suspend_work) {
 #ifdef CONFIG_MSM_MPDEC_INPUTBOOST_CPUMIN
 	is_screen_on = true;
 #endif
+
+        if (!msm_mpdec_tuners_ins.enabled)
+                return;
 
 	if (!mpdec_suspended) {
 		pr_info(MPDEC_TAG"Screen -> on\n");
